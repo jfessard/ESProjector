@@ -2,10 +2,10 @@
 Voice control your Panasonic projector with an esp8266 (Alexa compatible) and control sources on an 4x1 HDMI switch
 
 ## The problem at hand
-My projector is on a high closet, which also houses the media sources. Since they're behind a door and I don't want to setup an expensive universal remote, I wanted a reliable way of turning the projector on and off, and also switching video sources.
+My projector is on a high closet, which also houses the media stuff and HDMI cables. Since they're behind a door and I don't want to setup an expensive universal remote, I wanted a reliable way of turning the projector on and off, and also switching video sources.
 Since I have several amazon echos, I like the concept of voice controlling everything so that was the main requirement. 
 
-Thankfully I found out about [fauxmoesp] which emulates a wemo device with on/off control, requiring little work and no extra servers/accounts to get it to work. (unlike other solutions I have seen)
+Thankfully I found out about [fauxmoesp] which emulates a wemo device with on/off control, requiring little setup/piping and no extra servers/accounts to get it to work. (unlike other solutions I have seen through IFTTT and such)
 
 ## Requirements
 * Panasonic PT-AE3000U projector (might work on other Panasonic models if they use the same protocol) [Projector manual][controlspec]
@@ -17,32 +17,39 @@ Thankfully I found out about [fauxmoesp] which emulates a wemo device with on/of
 * wire, soldering iron, box, the usual
 
 ## Software
-* platformio core [piocore]
+* [platformIO core][piocore]
 * Arduino esp8266 framework (latest version)
 * [fauxmoesp]
-* [IRremoteESP8266][irremote]
+* [IRremoteESP8266][irremote] (I used `IRrecvDumpV2` to get the IR codes)
+
+Please ignore the pretty ugly `for` loops for writing the bytes, it worked. I may revisit the source to clean it up a bit sometime.
 
 ### Projector commands
-STX and ETX, Ctrl+B and Ctrl+C respectively, are used to show message start and end, and the rest is ASCII uppercase chars.
-* ON : `char pon[]  = {0x2, 'P', 'O', 'N', 0x3};`
+`STX` and `ETX`, Ctrl+B and Ctrl+C respectively, are used to show message start and end, and the rest is ASCII uppercase chars. Pretty straightforward from the manual. I actually used "menu" keypresses to test stuff repeatedly without having to turn it on and off.
+* ON : `char pon[]    = {0x2, 'P', 'O', 'N', 0x3};`
 * OFF: `char poff[] = {0x2, 'P', 'O', 'F', 0x3};`
+I don't really bother checking the return bytes from the projector since I can hear it powering up or down.
 
-### Monoprice Switcher commands:
-They are all NEC 32 bytes codes so pretty straightforward. All the values are in teh code as `#defines`. I originally tried to use my NUC's IR receiver to get the raw codes but that didn't go anywhere so I ordered the TSOP devices.
+### Monoprice Switcher commands
+They are all NEC 32 bytes codes so pretty straightforward. All the values are in the code as `#defines` if you need them. I originally tried to use my Intel NUC PC's IR receiver to get the raw codes but that didn't go anywhere so I ordered the TSOP chip.
 
 ## Hardware
+- MAX232 board pictured in a little project board, next to the upside-down esp8266. The annoying part is that it that the MAX232 breakout was wired opposite to what I thought it should be which caused a lot of head scratching (projector control was working sending bytes straight from a PC but not from the ESP board) Once I swapped RX/TX wires it all worked. Always double check mystery breakfout boards!
 
-- MAX232 board pictured in a little project board, next to the upside-down esp8266. The IR led module is at the end of a long 3 conductor wire, to put it where it's needed.
+- The IR led module is at the end of a ~60 cm long wire, to route it where it's needed. I was worried of signal integrity, but it's low-ish frequency (38kHz) and works very reliably inside the closed cabinet.
 
 ![mvimg_20180105_011141](https://user-images.githubusercontent.com/11471500/34757449-188e5d96-f586-11e7-9d6b-f21c1c85773b.jpg)
 
-- IR emitter aimed at the HDMI switch. Blue tape is for labelling better, also the blue leds are brighter than a thousand suns, so it dims them a fair amount.
+- IR emitter aimed at the HDMI switch. Blue tape is to dim the brighter-than-a-thousand-suns blue leds, and makes for clearer labelling. 
 
 ![mvimg_20180105_101719](https://user-images.githubusercontent.com/11471500/34757745-2ae277c8-f588-11e7-8af2-44cf7f94f5cf.jpg)
 
+- Full setup. Hardware is next to the NUC (powered by it and serial can be monitored/firware reflashed), switch is above it. All wiring goes behind the shelf, and through a hole in the top to the projector.
+
+![img_20180110_223709](https://user-images.githubusercontent.com/11471500/34811732-288416a6-f657-11e7-8e77-c1b21e1a309d.jpg)
 
 ### Extra ground pin
-I used two devices so I was a bit short on ground pins and didn't want to make a perf board. I just added an extra ground pin to the D1 mini with a 90 degree bend on it. Works like a charm.
+I used two "gadget boards" so I was short one ground pin and didn't want to make a perf board just for that. I just added an extra ground pin to the D1 mini with a 90 degree bend on it. Works like a charm.
 
 ![img_20180105_010757](https://user-images.githubusercontent.com/11471500/34757563-ed5fc636-f586-11e7-976f-eda03e1e835f.jpg)
 
