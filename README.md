@@ -58,7 +58,7 @@ I used two "gadget boards" so I was short one ground pin and didn't want to make
 [irremote]: https://github.com/markszabo/IRremoteESP8266
 [fauxmoesp]: https://bitbucket.org/xoseperez/fauxmoesp
 [hdmiswitch]: https://www.monoprice.com/product?p_id=5557
-[rs232]: https://www.ebay.com/itm/201579248241
+[rs232]: https://www.ebay.com/itm/253052504776
 [d1mini]: https://www.ebay.com/itm/172646774462
 [irmodule]: https://www.ebay.com/itm/Infrared-Transmitter-Module-IR-Infrared-Sensor-LED-Indicate-For-Arduino-SLM/132243573356
 [tsop]: https://www.ebay.com/itm/2x-TSOP38238-Remote-control-receiver-infrared-receiver-head-Photoelectric-switch/292101297804
