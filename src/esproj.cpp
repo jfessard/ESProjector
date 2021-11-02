@@ -34,9 +34,9 @@ typedef enum
 #define SWITCH_IR_POWER (0xFF00FF)
 
 // Pin assignments
-IRsend  irsend(D3);  // IR LED control
-#define PROJ_TX D2 //To projector
-#define PROJ_RX D1 //From projector. Unused.
+IRsend  irsend(D7);  // IR LED control
+#define PROJ_TX D8 //To projector
+#define PROJ_RX D5 //From projector. Unused.
 
 #define SERIAL_BAUDRATE                 115200
 #define PROJ_BAUDRATE                   9600
