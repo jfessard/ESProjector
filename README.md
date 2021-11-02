@@ -37,7 +37,7 @@ I don't really bother checking the return bytes from the projector since I can h
 They are all NEC 32 bytes codes, easy once you know the actual value to use. All the values are in the code as `#define` if you need them. I originally tried to use my Intel NUC PC's IR receiver to get the raw codes but that didn't go anywhere so I ordered the TSOP chip.
 
 ## Hardware
-### MAX323
+### MAX232
 - MAX232 board pictured in a little project board, next to the upside-down esp8266. The annoying part is that it that the MAX232 breakout was wired opposite to what I thought it should be which caused a lot of head scratching (projector control was working sending bytes straight from a PC but not from the ESP board) Once I swapped RX/TX wires it all worked. Always double check mystery breakfout boards!
 
 ### IR
