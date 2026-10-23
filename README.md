@@ -66,7 +66,7 @@ I used two "gadget boards" so I was short one ground pin and didn't want to make
 
 [wiki]: https://wiki.wemos.cc/products:d1:d1_mini
 [piocore]: http://platformio.org/get-started/cli
-[controlspec]: http://pdfstream.manualsonline.com/9/9176fcb0-11f1-412d-8ffe-7b7810664a2b.pdf
+[controlspec]: https://help.na.panasonic.com/wp-content/uploads/2023/02/PTAE3000_TQBJ0277_ENG.pdf
 [irremote]: https://github.com/markszabo/IRremoteESP8266
 [fauxmoesp]: https://bitbucket.org/xoseperez/fauxmoesp
 [hdmiswitch]: https://www.monoprice.com/product?p_id=5557
